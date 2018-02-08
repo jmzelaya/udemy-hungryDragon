@@ -12,7 +12,7 @@ var StateMain = {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.top = 0;
-    this.bottom = game.height - 100;
+    this.bottom = game.height - 120;
 
     //Dragon
     this.dragon = game.add.sprite(0, 0, "dragon");
@@ -63,8 +63,20 @@ var StateMain = {
     document.getElementById("wrongWay").style.display="none";
   },
 
+  flap: function(){
+    this.dragon.body.velocity.y = -350;
+  },
+
 
   update: function () {
+    if(game.input.activePointer.isDown){
+      this.flap();
+    }
+    if(this.dragon.y<this.top){
+      this.dragon.y=this.top;
+      this.dragon.body.velocity.y = 0;
+
+    }
     if(this.dragon.y > this.bottom){
       this.dragon.y = this.bottom;
       this.dragon.body.gravity.y = 0;
