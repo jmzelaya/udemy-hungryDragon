@@ -1,6 +1,6 @@
 var StateMain = {
   preload: function () {
-    if (screen.width < 900){
+    if (screen.width < 1500){
       game.scale.forceOrientation(true, false);
     }
 
@@ -43,7 +43,7 @@ var StateMain = {
 
   setListeners: function(){
 
-    if (screen.width<900){
+    if (screen.width<1500){
       game.scale.enterIncorrectOrientation.add(this.wrongWay, this);
       game.scale.leaveIncorrectOrientation.add(this.rightWay, this);
     }

@@ -4,7 +4,7 @@ var score;
 var soundOn=true;
 
 window.onload = function(){
-  if(screen.width>900){
+  if(screen.width>1500){
     game = new Phaser.Game(640, 480, Phaser.AUTO, "ph_game");
   }
   else{
