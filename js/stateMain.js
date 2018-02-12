@@ -123,6 +123,10 @@ var StateMain = {
       score += 1;
       this.scoreText.text = score;
     }
+    else{
+      candy.kill();
+      game.state.start("StateOver");
+    }
   },
 
   resetThink: function(){
