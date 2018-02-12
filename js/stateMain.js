@@ -45,6 +45,7 @@ var StateMain = {
     //Dragon Physics
     game.physics.enable([this.dragon, this.candies],Phaser.Physics.ARCADE);
     this.dragon.body.gravity.y = 500;
+    this.dragon.body.immovable = true;
 
     this.setListeners();
   },//CLOSE create:
