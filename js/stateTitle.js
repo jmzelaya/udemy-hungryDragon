@@ -10,7 +10,7 @@ var StateTitle = {
                  //over, normal, pressed
                  //         |
       this.startGame, this, 6, 7, 6);
-    this.buttonPlayAgain.anchor.set(0.5, 0.5);
+    this.buttonStart.anchor.set(0.5, 0.5);
   },
 
   startGame: function (){
