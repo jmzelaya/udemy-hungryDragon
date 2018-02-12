@@ -7,6 +7,8 @@ var StateMain = {
     game.load.spritesheet("dragon", "images/main/dragon.png", 120, 85, 4);
     game.load.image("background", "images/main/background.png");
     game.load.spritesheet("candy", "images/main/candy.png", 52, 50, 8);
+    game.load.image("balloon", "images/main/thought.png");
+
   },//CLOSE preload:
 
   create: function () {
@@ -41,6 +43,17 @@ var StateMain = {
     this.candies.createMultiple(40, 'candy');
     this.candies.setAll('checkWorldBounds', true);
     this.candies.setAll('outOfBoundsKill', true);
+
+    //Thought
+    this.balloonGroup = game.app.group();
+    this.balloon = game.add.sprite(0, 0, "balloon");
+    this.think = game.add.sprite(36, 26, "candy");
+    this.balloonGroup.add(this.balloon);
+    this.balloonGroup.add(this.think);
+    this.balloonGroup.scale.x = 0.5;
+    this.balloonGroup.scale.y = 0.5;
+    this.balloonGroup.x = 50;
+
 
     //Dragon Physics
     game.physics.enable([this.dragon, this.candies],Phaser.Physics.ARCADE);
@@ -96,6 +109,8 @@ var StateMain = {
   update: function () {
     //Collisions
     game.physics.arcade.collide(this.dragon, this.candies, null, this.onEat);
+
+    this.balloonGroup.y = this.dragon.y - 60;
 
     if(game.input.activePointer.isDown){
       this.flap();
