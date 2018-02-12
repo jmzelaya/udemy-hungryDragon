@@ -1,6 +1,6 @@
 var StateMain = {
   preload: function () {
-    if (screen.width < 1500){
+    if (screen.width < 900){
       game.scale.forceOrientation(true, false);
     }
 
@@ -12,6 +12,9 @@ var StateMain = {
   },//CLOSE preload:
 
   create: function () {
+    //init vars
+    score = 0;
+
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.top = 0;
@@ -45,7 +48,7 @@ var StateMain = {
     this.candies.setAll('outOfBoundsKill', true);
 
     //Thought
-    this.balloonGroup = game.app.group();
+    this.balloonGroup = game.add.group();
     this.balloon = game.add.sprite(0, 0, "balloon");
     this.think = game.add.sprite(36, 26, "candy");
     this.balloonGroup.add(this.balloon);
@@ -54,6 +57,16 @@ var StateMain = {
     this.balloonGroup.scale.y = 0.5;
     this.balloonGroup.x = 50;
 
+    //text
+    this.scoreText = game.add.text(game.world.centerX, 60, "0");
+    this.scoreText.fill = "#000000";
+    this.scoreText.fontSize = 64;
+    this.scoreText.anchor.set(0.5, 0.5);
+
+    this.scoreLabel = game.add.text(game.world.centerX, 20, "SCORE");
+    this.scoreLabel.fill = "#000000";
+    this.scoreLabel.fontSize = 32;
+    this.scoreLabel.anchor.set(0.5, 0.5);
 
     //Dragon Physics
     game.physics.enable([this.dragon, this.candies],Phaser.Physics.ARCADE);
@@ -61,11 +74,12 @@ var StateMain = {
     this.dragon.body.immovable = true;
 
     this.setListeners();
+    this.resetThink();
   },//CLOSE create:
 
   setListeners: function(){
 
-    if (screen.width<1500){
+    if (screen.width<900){
       game.scale.enterIncorrectOrientation.add(this.wrongWay, this);
       game.scale.leaveIncorrectOrientation.add(this.rightWay, this);
     }
@@ -103,12 +117,22 @@ var StateMain = {
   },
 
   onEat: function(dragon, candy){
-    candy.kill();
+    if(this.think.frame == candy.frame){
+      candy.kill();
+      this.resetThink();
+      score += 1;
+      this.scoreText.text = score;
+    }
+  },
+
+  resetThink: function(){
+    var thinking = game.rnd.integerInRange(0, 7);
+    this.think.frame = thinking;
   },
 
   update: function () {
     //Collisions
-    game.physics.arcade.collide(this.dragon, this.candies, null, this.onEat);
+    game.physics.arcade.collide(this.dragon, this.candies, null, this.onEat, this);
 
     this.balloonGroup.y = this.dragon.y - 60;
 
